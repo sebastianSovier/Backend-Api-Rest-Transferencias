@@ -8,11 +8,11 @@ const MovimientosRouter = require('./routes/MovimientosController.js');
 
 
 app.use(cors());
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
-app.use(bodyParser.json())
-
+app.use(bodyParser.json());
+app.use('/Account', AccountRoutes);
 app.use('/Destinatario', DestinatarioRouter);
 app.use('/Movimientos', MovimientosRouter);
 
