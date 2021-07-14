@@ -3,8 +3,10 @@ const bodyParser = require('body-parser');
 var cors = require('cors');
 const app = express();
 const port = process.env.PORT || 3000;
+
 const DestinatarioRouter = require('./routes/DestinatarioController.js');
 const MovimientosRouter = require('./routes/MovimientosController.js');
+const AccountRoutes = require('./routes/accountController.js');
 
 
 app.use(cors());
@@ -12,6 +14,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
 app.use(bodyParser.json());
+
+
 app.use('/Account', AccountRoutes);
 app.use('/Destinatario', DestinatarioRouter);
 app.use('/Movimientos', MovimientosRouter);

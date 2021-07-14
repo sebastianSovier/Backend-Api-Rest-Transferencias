@@ -40,7 +40,7 @@ router.post('/Login', urlencodedParser, function (req, res) {
                 console.log("result:" + result.data[0].contrasena);
                 if (req.body.Password === result.data[0].contrasena) {
                     console.log(result);
-                    return res.status(200).send({ auth: true, access_Token: token });
+                    return res.status(200).send({ auth: true, mensaje:"acceso exitoso"});
                 } else {
                     return res.status(401).send({ auth: false, mensaje: "acceso no autorizado" });
                 }
