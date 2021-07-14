@@ -6,7 +6,7 @@ const config = {
     user: env.DB_USER || 'root',
     port:env.port || 3308,
     password: env.DB_PASSWORD || 'sebsov15',
-    database: env.DB_NAME || 'bdTransferencias',
+    database: env.DB_NAME || 'bdTransacciones',
   },
   listPerPage: env.LIST_PER_PAGE || 10,
   secret:'secretkey'
