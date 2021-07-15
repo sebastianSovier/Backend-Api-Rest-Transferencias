@@ -4,26 +4,26 @@ const MovimientosDal = require('../services/MovimientosDal');
 const helper = require('../helper');
 
 /* GET programming languages. */
-router.get('/ObtenerMovimientos', async function (req, res, next) {
+router.get('/ObtenerMovimientos', helper.verifyToken, async function (req, res, next) {
   try {
-    res.json(await MovimientosDal.ObtenerHistorialMovimientos());
+
+    return res.status(200).send({ datos: await MovimientosDal.ObtenerHistorialMovimientos() });
   } catch (err) {
     console.error(`Error al obtener movimientos: `, err.message);
-    next(err);
+    return res.status(400).send({ datos: { Error: "error al obtener destinatarios" } });
   }
 });
-router.post('/IngresarTransferencia', async function (req, res, next) {
+router.post('/IngresarTransferencia', helper.verifyToken, async function (req, res, next) {
   try {
     MovimientosDal.CrearTransferencia(req.body).then(function (result) {
-
+      return res.status(200).send({ datos: {Codigo:"0",Error:"ejecucion exitosa"} });
     }).catch(function (error) {
-      console.log(error);
+      return res.status(400).send({ datos: {Codigo:"1", Error: "error al obtener destinatarios" } });
     }).finally(function () {
     });
 
   } catch (err) {
-    console.error(`Error al insertar movimiento: `, err.message);
-    next(err);
+    return res.status(400).send({ datos: {Codigo:"1", Error: "error al obtener destinatarios" } });
   }
 });
 

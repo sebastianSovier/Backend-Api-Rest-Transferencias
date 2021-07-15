@@ -4,7 +4,7 @@ const config = require('../config');
 
 async function ObtenerHistorialMovimientos() {
   const rows = await db.query(
-    `SELECT d.nombre_destinatario, d.rut_destinatario, d.banco_destino,d.tipo_cuenta,t.monto_transferencia
+    `SELECT d.nombre_destinatario nombre_destinatario, d.rut_destinatario rut_destinatario, d.banco_destino banco_destino,d.tipo_cuenta tipo_cuenta,t.monto_transferencia monto_transferencia
   FROM Transferencias t, Destinatario d where d.destinatario_id = t.destinatario_id order by t.destinatario_id`
   );
   const data = helper.emptyOrRows(rows);

@@ -17,14 +17,6 @@ router.get('/ObtenerUsuarios', async function (req, res, next) {
     }
 });
 
-router.get('/', async function (req, res, next) {
-    try {
-        res.json(await usuarioDal.ObtenerUsuario());
-    } catch (err) {
-        console.error(`Error al obtener usuario: `, err.message);
-        next(err);
-    }
-});
 router.post('/Login', urlencodedParser, function (req, res) {
     try {
         console.log(req.body.Username + "  " + req.body.Password);
@@ -33,47 +25,41 @@ router.post('/Login', urlencodedParser, function (req, res) {
             console.log(req.Username + "  " + req.Password);
             err = "invalid";
         }
-        if (err === "invalid") return res.status(500).send("There was a problem validating the user.")
+        if (err === "invalid") return res.status(401).send({ auth: false, Error: "acceso no autorizado", mensaje: "ejecucion exitosa" })
         // create a token
         usuarioDal.ObtenerUsuario(req.body.Username).then(function (result) {
-            try {
-                console.log("result:" + result.data[0].contrasena);
-                if (req.body.Password === result.data[0].contrasena) {
-                    console.log(result);
-                    return res.status(200).send({ auth: true, mensaje:"acceso exitoso"});
-                } else {
-                    return res.status(401).send({ auth: false, mensaje: "acceso no autorizado" });
-                }
-            } catch (error) {
-                console.log(error);
+            console.log("result:" + result.data[0].contrasena);
+            if (req.body.Password === result.data[0].contrasena) {
+                var token = jwt.sign({ id: result.data[0].usuario_id }, config.secret, {
+                    expiresIn: "1h"
+                });
+                global.token = token;
+                return res.status(200).send({ auth: true, access_Token: token, mensaje: "ejecucion exitosa" });
+            } else {
+                return res.status(401).send({ auth: false, Error: "acceso no autorizado", mensaje: "ejecucion exitosa" });
             }
+
         }).catch(function (error) {
             console.log(error);
         }).finally(function () {
         });
 
     } catch (err) {
-        console.error(`Error al ingresar al app: `, err.message);
-        next(err);
+        return res.status(400).send({ datos: { Codigo: "1", Error: "error al validar acceso" } });
     }
 });
 
 router.post('/IngresarUsuario', async function (req, res, next) {
     try {
         await usuarioDal.CrearUsuario(req.body).then(function (result) {
-            try {
-                return res.status(200).send({ datos: "ok" });
-            } catch (error) {
-                console.log(error);
-                return res.status(400).send({ datos: { Error: "error al crear usuario" } });
-            }
+
+            return res.status(200).send({ Codigo: "0", Error: "ejecucion exitosa" });
         }).catch(function (error) {
-            console.log(error);
+            return res.status(400).send({ datos: { Codigo: "1", Error: "error al crear usuario" } });
         }).finally(function () {
         });
     } catch (err) {
-        console.error(`Error al insertar usuario: `, err.message);
-        next(err);
+        return res.status(400).send({ datos: { Codigo: "1", Error: "error al crear usuario" } });
     }
 });
 

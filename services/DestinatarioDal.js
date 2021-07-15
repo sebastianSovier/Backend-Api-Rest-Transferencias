@@ -3,11 +3,10 @@ const helper = require('../helper');
 const config = require('../config');
 
 
-async function BuscarDestinatario(nombre_destinatario) {
+async function BuscarDestinatarios() {
     const rows = await db.query(
-      `SELECT nombre_destinatario, correo_destinatario, banco_destino, tipo_cuenta
-      FROM Destinatario where nombre_destinatario = ?`,
-      [nombre_destinatario]
+      `SELECT destinatario_id,nombre_destinatario, correo_destinatario, banco_destino, tipo_cuenta
+      FROM destinatario order by destinatario_id`
     );
     const data = helper.emptyOrRows(rows);
   
@@ -18,7 +17,7 @@ async function BuscarDestinatario(nombre_destinatario) {
   
   async function CrearDestinatario(DestinatarioRequest) {
     const result = await db.query(
-      `INSERT INTO Paises 
+      `INSERT INTO destinatario 
       (nombre_destinatario, rut_destinatario, dv_destinatario, correo_destinatario,telefono_destinatario,banco_destino,tipo_cuenta,numero_cuenta) 
       VALUES 
       (?, ?, ?, ?, ?, ?, ?, ?)`,
@@ -41,5 +40,5 @@ async function BuscarDestinatario(nombre_destinatario) {
   
   module.exports = {
     CrearDestinatario,
-    BuscarDestinatario
+    BuscarDestinatarios
   }
