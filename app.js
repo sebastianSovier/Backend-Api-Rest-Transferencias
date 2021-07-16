@@ -8,8 +8,11 @@ const DestinatarioRouter = require('./routes/DestinatarioController.js');
 const MovimientosRouter = require('./routes/MovimientosController.js');
 const AccountRoutes = require('./routes/accountController.js');
 
+var corsOptions = {
+  origin: 'https://angular-app-transferencias.herokuapp.com',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
 
-app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
@@ -19,7 +22,7 @@ app.use(bodyParser.json());
 app.use('/Account', AccountRoutes);
 app.use('/Destinatario', DestinatarioRouter);
 app.use('/Movimientos', MovimientosRouter);
-
+app.use(cors(corsOptions));
 /* Error handler middleware */
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
