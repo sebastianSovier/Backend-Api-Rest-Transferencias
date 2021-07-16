@@ -8,10 +8,15 @@ const DestinatarioRouter = require('./routes/DestinatarioController.js');
 const MovimientosRouter = require('./routes/MovimientosController.js');
 const AccountRoutes = require('./routes/accountController.js');
 
+var corsOptions = {
+  origin: 'https://angular-app-transferencias.herokuapp.com:8080',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+app.use(cors());
 app.use(function (req, res, next) {
 
   // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', 'https://angular-app-transferencias.herokuapp.com');
+  res.setHeader('Access-Control-Allow-Origin', 'https://angular-app-transferencias.herokuapp.com:8080');
   res.setHeader('Access-Control-Allow-Origin', 'https://angular-app-transferencias.herokuapp.com:8080');
   // Request methods you wish to allow
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
