@@ -8,25 +8,14 @@ const DestinatarioRouter = require('./routes/DestinatarioController.js');
 const MovimientosRouter = require('./routes/MovimientosController.js');
 const AccountRoutes = require('./routes/accountController.js');
 
-var corsOptions = {
-  origin: 'https://angular-app-transferencias.herokuapp.com',
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}
-app.use(cors(corsOptions));
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
-  res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
-  next();
-});
+app.use(cors());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
 app.use(bodyParser.json());
 
-
+app.options('*', cors());
 app.use('/Account', AccountRoutes);
 app.use('/Destinatario', DestinatarioRouter);
 app.use('/Movimientos', MovimientosRouter);
