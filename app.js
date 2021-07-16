@@ -18,10 +18,10 @@ var corsOptions = {
   origin: 'http://angular-app-transferencias.herokuapp.com',
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
-
-app.use('/Account', AccountRoutes,cors(corsOptions));
-app.use('/Destinatario', DestinatarioRouter,cors(corsOptions));
-app.use('/Movimientos', MovimientosRouter,cors(corsOptions));
+app.use(cors(corsOptions));
+app.use('/Account', AccountRoutes);
+app.use('/Destinatario', DestinatarioRouter);
+app.use('/Movimientos', MovimientosRouter);
 
 /* Error handler middleware */
 app.use((err, req, res, next) => {
