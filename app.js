@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 var corsOptions = {
-  origin: 'https://angular-app-transferencias.herokuapp.com/',
+  origin: 'https://angular-app-transferencias.herokuapp.com',
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 app.use(cors(corsOptions));
