@@ -6,13 +6,8 @@ var config = require('../config');
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
-const helper = require('../helper');
-var cors = require('cors');
-var corsOptions = {
-  origin: 'https://angular-app-transferencias.herokuapp.com',
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}
-router.use(cors(corsOptions));
+
+
 router.get('/ObtenerUsuarios', async function (req, res, next) {
     try {
         res.json(await usuarioDal.ObtenerUsuarios());
