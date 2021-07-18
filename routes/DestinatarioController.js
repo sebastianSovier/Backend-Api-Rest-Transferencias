@@ -9,16 +9,16 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false });
 const helper = require('../helper');
 var cors = require('cors');
 var corsOptions = {
-    origin: 'https://angular-app-transferencias.herokuapp.com',
+    origin: 'https://angular-app-transferencias.herokuapp.com/',
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
   }
   router.use(cors(corsOptions));
 router.get('/ObtenerDestinatario', helper.verifyToken, async function (req, res, next) {
     try {
-        return res.status(200).send({ datos: { Codigo: "0", data: res.json(await DestinatarioDal.BuscarDestinatarios()) } });
+        return res.status(200).send({ datos: { Codigo: "0", data: await DestinatarioDal.BuscarDestinatarios()} });
     } catch (err) {
         console.error(`Error al obtener destinatarios: `, err.message);
-        return res.status(400).send({ datos: { Error: "error al obtener destinatarios" } });
+        return res.status(400).send({ datos: { Codigo: "1",Error: "error al obtener destinatarios" } });
     }
 });
 

@@ -3,6 +3,8 @@ const helper = require('../helper');
 const config = require('../config');
 
 async function ObtenerUsuarios(){
+  try {
+  
   const rows = await db.query(
     `SELECT usuario_id, usuario, nombre_completo, correo, fecha_registro 
     FROM Usuarios order by usuario_id`
@@ -12,9 +14,15 @@ async function ObtenerUsuarios(){
   return {
     data
   }
+    
+} catch (error) {
+    console.log(error);
+}
 }
 
 async function ObtenerUsuario(usuario_id){
+  try {
+  
     const rows = await db.query(
         `SELECT usuario_id, usuario, nombre_completo,contrasena, correo, fecha_registro 
         FROM Usuarios where usuario = ? order by usuario_id`,
@@ -25,9 +33,15 @@ async function ObtenerUsuario(usuario_id){
     return {
       data
     }
+      
+  } catch (error) {
+   console.log(error); 
+  }
   }
 
 async function CrearUsuario(UsuarioRequest){
+  try {
+   
   const result = await db.query(
     `INSERT INTO Usuarios 
     (usuario, contrasena, nombre_completo, correo) 
@@ -46,6 +60,10 @@ async function CrearUsuario(UsuarioRequest){
   }
 
   return {message};
+   
+} catch (error) {
+ console.log(error);   
+}
 }
 
 module.exports = {

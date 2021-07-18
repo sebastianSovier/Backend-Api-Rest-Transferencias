@@ -4,7 +4,7 @@ const MovimientosDal = require('../services/MovimientosDal');
 const helper = require('../helper');
 var cors = require('cors');
 var corsOptions = {
-  origin: 'https://angular-app-transferencias.herokuapp.com',
+  origin: 'https://angular-app-transferencias.herokuapp.com/',
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 router.use(cors(corsOptions));
@@ -12,7 +12,7 @@ router.use(cors(corsOptions));
 router.get('/ObtenerMovimientos', helper.verifyToken, async function (req, res, next) {
   try {
 
-    return res.status(200).send({ datos: await MovimientosDal.ObtenerHistorialMovimientos() });
+    return res.status(200).send({ datos:{Codigo: "0" , data:await MovimientosDal.ObtenerHistorialMovimientos()}});
   } catch (err) {
     console.error(`Error al obtener movimientos: `, err.message);
     return res.status(400).send({ datos: { Error: "error al obtener destinatarios" } });
