@@ -9,8 +9,8 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false });
 const helper = require('../helper');
 var cors = require('cors');
 var corsOptions = {
-  origin: 'https://angular-app-transferencias.herokuapp.com',
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+    origin: 'https://angular-app-transferencias.herokuapp.com',
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 router.use(cors(corsOptions));
 router.get('/ObtenerUsuarios', async function (req, res, next) {
@@ -33,17 +33,22 @@ router.post('/Login', urlencodedParser, function (req, res) {
         if (err === "invalid") return res.status(401).send({ auth: false, Error: "acceso no autorizado", mensaje: "ejecucion exitosa" })
         // create a token
         usuarioDal.ObtenerUsuario(req.body.Username).then(function (result) {
-            console.log("result:" + result.data[0].contrasena);
-            if (req.body.Password === result.data[0].contrasena) {
-                var token = jwt.sign({ id: result.data[0].usuario_id }, config.secret, {
-                    expiresIn: "1h"
-                });
-                global.token = token;
-                return res.status(200).send({ auth: true, access_Token: token, mensaje: "ejecucion exitosa" });
+            console.log("resultadito");
+            console.log(result);
+            if (result.data.length > 0) {
+                console.log("result:" + result.data[0].contrasena);
+                if (req.body.Password === result.data[0].contrasena) {
+                    var token = jwt.sign({ id: result.data[0].usuario_id }, config.secret, {
+                        expiresIn: "1h"
+                    });
+                    global.token = token;
+                    return res.status(200).send({ auth: true, access_Token: token, mensaje: "ejecucion exitosa" });
+                } else {
+                    return res.status(401).send({ auth: false, Error: "acceso no autorizado", mensaje: "ejecucion exitosa" });
+                }
             } else {
                 return res.status(401).send({ auth: false, Error: "acceso no autorizado", mensaje: "ejecucion exitosa" });
             }
-
         }).catch(function (error) {
             console.log(error);
         }).finally(function () {
