@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-var cors = require('cors');
+
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -14,11 +14,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
 app.use(bodyParser.json());
-var corsOptions = {
-  origin: 'http://angular-app-transferencias.herokuapp.com',
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}
-app.use(cors(corsOptions));
+
 app.use('/Account', AccountRoutes);
 app.use('/Destinatario', DestinatarioRouter);
 app.use('/Movimientos', MovimientosRouter);

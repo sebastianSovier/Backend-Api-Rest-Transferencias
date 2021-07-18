@@ -6,7 +6,7 @@ const config = require('../config');
 async function BuscarDestinatarios() {
     const rows = await db.query(
       `SELECT destinatario_id,nombre_destinatario, correo_destinatario, banco_destino, tipo_cuenta
-      FROM destinatario order by destinatario_id`
+      FROM Destinatario order by destinatario_id`
     );
     const data = helper.emptyOrRows(rows);
   
@@ -17,7 +17,7 @@ async function BuscarDestinatarios() {
   
   async function CrearDestinatario(DestinatarioRequest) {
     const result = await db.query(
-      `INSERT INTO destinatario 
+      `INSERT INTO Destinatario 
       (nombre_destinatario, rut_destinatario, dv_destinatario, correo_destinatario,telefono_destinatario,banco_destino,tipo_cuenta,numero_cuenta) 
       VALUES 
       (?, ?, ?, ?, ?, ?, ?, ?)`,

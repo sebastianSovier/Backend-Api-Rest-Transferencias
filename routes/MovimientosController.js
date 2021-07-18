@@ -2,7 +2,12 @@ const express = require('express');
 const router = express.Router();
 const MovimientosDal = require('../services/MovimientosDal');
 const helper = require('../helper');
-
+var cors = require('cors');
+var corsOptions = {
+  origin: 'http://angular-app-transferencias.herokuapp.com',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+router.use(cors(corsOptions));
 /* GET programming languages. */
 router.get('/ObtenerMovimientos', helper.verifyToken, async function (req, res, next) {
   try {
