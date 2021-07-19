@@ -3,12 +3,12 @@ const helper = require('../helper');
 const config = require('../config');
 
 
-async function BuscarDestinatarios() {
+async function BuscarDestinatarios(usuario) {
   try {
 
     const rows = await db.query(
       `SELECT destinatario_id,nombre_destinatario, correo_destinatario, banco_destino, tipo_cuenta
-      FROM Destinatario order by destinatario_id`
+      FROM Destinatario where usuario = ? order by destinatario_id`,[usuario]
     );
     const data = helper.emptyOrRows(rows);
 
@@ -26,14 +26,14 @@ async function CrearDestinatario(DestinatarioRequest) {
 
     const result = await db.query(
       `INSERT INTO Destinatario 
-      (nombre_destinatario, rut_destinatario, dv_destinatario, correo_destinatario,telefono_destinatario,banco_destino,tipo_cuenta,numero_cuenta) 
+      (nombre_destinatario, rut_destinatario, dv_destinatario, correo_destinatario,telefono_destinatario,banco_destino,tipo_cuenta,numero_cuenta,usuario) 
       VALUES 
-      (?, ?, ?, ?, ?, ?, ?, ?)`,
+      (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         DestinatarioRequest.nombre_destinatario, DestinatarioRequest.rut_destinatario,
         DestinatarioRequest.dv_destinatario, DestinatarioRequest.correo_destinatario,
         DestinatarioRequest.telefono_destinatario, DestinatarioRequest.banco_destino,
-        DestinatarioRequest.tipo_cuenta, DestinatarioRequest.numero_cuenta
+        DestinatarioRequest.tipo_cuenta, DestinatarioRequest.numero_cuenta,DestinatarioRequest.usuario
       ]
     );
 

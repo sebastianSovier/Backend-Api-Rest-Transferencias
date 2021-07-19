@@ -9,10 +9,10 @@ var corsOptions = {
 }
 router.use(cors(corsOptions));
 /* GET programming languages. */
-router.get('/ObtenerMovimientos', helper.verifyToken, async function (req, res, next) {
+router.post('/ObtenerMovimientos', helper.verifyToken, async function (req, res, next) {
   try {
 
-    return res.status(200).send({ datos:{Codigo: "0" , data:await MovimientosDal.ObtenerHistorialMovimientos()}});
+    return res.status(200).send({ datos:{Codigo: "0" , data:await MovimientosDal.ObtenerHistorialMovimientos(req.body.usuario)}});
   } catch (err) {
     console.error(`Error al obtener movimientos: `, err.message);
     return res.status(400).send({ datos: { Error: "error al obtener destinatarios" } });

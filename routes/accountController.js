@@ -42,7 +42,7 @@ router.post('/Login', urlencodedParser, function (req, res) {
                         expiresIn: "1h"
                     });
                     global.token = token;
-                    return res.status(200).send({ auth: true, access_Token: token, mensaje: "ejecucion exitosa" });
+                    return res.status(200).send({ auth: true, access_Token: token,usuario:result.data[0].usuario, mensaje: "ejecucion exitosa" });
                 } else {
                     return res.status(401).send({ auth: false, Error: "acceso no autorizado", mensaje: "ejecucion exitosa" });
                 }
